@@ -1,36 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
-import WelcomeMessage from './WelcomeMessage';
-// import Counter from './Counter';
 import { useState } from 'react';
 
 
+// 1. Basic syntax
+// function Button(parameters) {
+//   function handleClick() {
+//     return parameters.onClickFunction(parameters.increment)
+//   }
+//   return <button onClick={handleClick}>+{parameters.increment}</button>
+// }
+
+// 2. Using object destructuring
+// function Button(parameters) {
+//   const {increment, onClickFunction} = parameters
+//   function handleClick() {
+//     return onClickFunction(increment)
+//   }
+//   return <button onClick={handleClick}>+{increment}</button>
+// }
+
+// 3. Using object destructuring and arrow functions
+const Button = ({ increment, onClickFunction }) => {
+  const handleClick = () => {
+    onClickFunction(increment)
+  }
+  return <button onClick={handleClick}>+{increment}</button>
+}
+
+// + Replaced arrow functions with old-style JS functions
+// + Replaced prettified Button function call with regular JS function call.
+// - Replaced destructured param with regular param
+
+
+// const App = () => {
 function App() {
   const [count, setCount] = useState(0)
+
+  // const incrementCount = increment => {
+  //   setCount(count + increment)
+  // }
+  function incrementCount(increment) {
+    setCount(count + increment);
+  }
+
+  const komalDhyanDeObject = {increment: 1, onClickFunction: incrementCount}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edited <code>src/App.js</code> and saved to reload.
-        </p>
-        {/* <WelcomeMessage name1={'Chetan'} name2={'Komal'} name3={'Rohit'}/> */}
-        <WelcomeMessage setFriendCount={setCount} count={count}>Chetan</WelcomeMessage>
-        {/* <WelcomeMessage setFriendCount={setCount} count={count}>Rohit</WelcomeMessage> */}
-        {/* <WelcomeMessage setFriendCount={setCount} count={count}>Komal</WelcomeMessage> */}
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>You have {count} friends.</p>
-        {/* <Counter /> */}
-      </header>
+    <div>
+      <Button increment={1} onClickFunction={incrementCount}/>
+      { Button(komalDhyanDeObject) }
+
+      <Button increment={10} onClickFunction={incrementCount}/>
+      <Button increment={100} onClickFunction={incrementCount}/>
+      <Button increment={1000} onClickFunction={incrementCount}/>
+      <span>{count}</span>
     </div>
-  );
+  )
 }
 
 export default App;
